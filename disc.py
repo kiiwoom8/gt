@@ -39,10 +39,10 @@ def end_round():
 def print_discusstion_menu():
     t.check_error()
     if data.discussion_doubt:
-        t.t_print(f"Target: {data.BLUE}{data.characters[data.target]}{data.RESET}")
+        t.t_print(f"Target: {data.BLUE}{data.characters[data.target]}{data.END}")
         type = "Doubt"
     elif data.discussion_defend:
-        t.t_print(f"Target: {data.BLUE}{data.characters[data.target]}{data.RESET}")
+        t.t_print(f"Target: {data.BLUE}{data.characters[data.target]}{data.END}")
         type = "Defend"
     else: # Doubt, Cover
         type = "Default"
@@ -55,11 +55,11 @@ def print_discusstion_menu():
     elif data.first_defender:
         excluded_actions = ["Defend", "Retaliate", "Block Argument Doubt", "Help"]
 
-    action_name_list = [action_name for action_name, action in data.action_list.items() 
+    action_name_list = [action_name for action_name, action in data.alist.items() 
                         if action_name not in excluded_actions and action["Type"] == type]
 
     for i, action_name in enumerate(action_name_list, start=1):
-        t.t_print(f"{i}. {data.action_list[action_name]['Name']}")
+        t.t_print(f"{i}. {data.alist[action_name]['Name']}")
 
     t.t_print("0. End discussion")
     t.t_print("z. Go back")

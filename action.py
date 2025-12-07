@@ -7,7 +7,7 @@ import disc
 import bakup
 
 def record_action(action_name: str, actor = None, target = None, backup_status = True):
-    action = data.action_list[action_name]
+    action = data.alist[action_name]
     actor, target = set_actor_and_target(action, action_name, actor, target)
     if not (actor and target):
         return
@@ -28,7 +28,7 @@ def set_actor_and_target(action, action_name, actor, target):
             target = None
 
     if target:
-        t.t_print(f"Target: {data.BLUE}{data.characters[target]}{data.RESET}" )
+        t.t_print(f"Target: {data.BLUE}{data.characters[target]}{data.END}" )
 
     # handle actor
     if not actor:
@@ -105,7 +105,7 @@ def post_action(action_name, actor, target):
 
 def get_target(actor):
     while True:
-        target = select_character("target", f"Acting character: {data.BLUSH}{data.characters[actor]}{data.RESET}")
+        target = select_character("target", f"Acting character: {data.BLUSH}{data.characters[actor]}{data.END}")
         if target == 'z':
             return target
         if actor == int(target):
@@ -145,9 +145,9 @@ def remove_action_from_table(actor, target):
     actions = data.matrix[actor - 1][target - 1]
     if actions:
         removed_action = actions.pop()
-        key = next((action_num for action_num, action in data.action_list.items() if action["Abbr"] == removed_action), None)
+        key = next((action_num for action_num, action in data.alist.items() if action["Abbr"] == removed_action), None)
         if key:
-            removed_action = data.action_list[key]
+            removed_action = data.alist[key]
         t.r_print(f"\033[91mDeleted:\033[0m {actor_name} {removed_action['Name']} {target_name}")
         table.print_table()
     else:

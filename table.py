@@ -55,7 +55,7 @@ def generate_table(numbered_characters, col_widths):
 
             row_line = format_row(numbered_characters, char_index, row_data, col_widths)
             data.table += f"{apply_color(row_line)}\n\n"
-            data.table = re.sub(r"[-─]", lambda match: f"\033[90m{match.group()}{data.RESET}", data.table)
+            data.table = re.sub(r"[-─]", lambda match: f"\033[90m{match.group()}{data.END}", data.table)
 
 
 def build_header(num_characters, col_widths):
@@ -93,19 +93,19 @@ def apply_color(text):
     def repl(m):
         abbr = m.group(1)
         color = data.words_to_color[abbr]
-        return f"{color}{abbr}{data.RESET}"
+        return f"{color}{abbr}{data.END}"
 
     return pattern.sub(repl, text)
 
 
 def print_status():
     if data.discussion_doubt or data.discussion_defend:
-        print(f"{data.GREEN}[On Discussion]{data.RESET}")
-        print(f"{data.YELLOW}Round {data.round}{data.RESET}")
+        print(f"{data.GREEN}[On Discussion]{data.END}")
+        print(f"{data.YELLOW}Round {data.round}{data.END}")
     elif vote.onVote():
-        print(f"{data.GREEN}[On Vote]{data.RESET}")
+        print(f"{data.GREEN}[On Vote]{data.END}")
     else:
-        print(f"{data.YELLOW}Round {data.round}{data.RESET}")
+        print(f"{data.YELLOW}Round {data.round}{data.END}")
 
 
 def clear():

@@ -30,7 +30,7 @@ def export_current_table():
 
     if delete_backup:
         bakup.undo_stack.pop()
-    t.t_print(f"{data.GREEN}Exported current table successfully!{data.RESET}")
+    t.t_print(f"{data.GREEN}Exported current table successfully!{data.END}")
 
 
 def load_table_from_file():
@@ -41,15 +41,15 @@ def load_table_from_file():
         bakup.restore_state(state)
         data.characters = {int(char_num): char_name for char_num, char_name in data.characters.items()} # json doesn't support int key so convert it
         table.print_table()
-        t.t_print(f"{data.GREEN}Loaded table successfully!{data.RESET}")
+        t.t_print(f"{data.GREEN}Loaded table successfully!{data.END}")
         
     except FileNotFoundError:
-        t.t_print(f"{data.RED}Error: 'table.json' file not found.{data.RESET}")
+        t.t_print(f"{data.RED}Error: 'table.json' file not found.{data.END}")
     except JSONDecodeError:
-        t.t_print(f"{data.RED}Error: Failed to parse 'table.json'. Ensure it contains valid JSON.{data.RESET}")
+        t.t_print(f"{data.RED}Error: Failed to parse 'table.json'. Ensure it contains valid JSON.{data.END}")
     except KeyError as e:
-        t.t_print(f"{data.RED}Error: Missing key in the loaded table: {e}{data.RESET}")
+        t.t_print(f"{data.RED}Error: Missing key in the loaded table: {e}{data.END}")
     except AttributeError as e:
-        t.t_print(f"{data.RED}Error: Invalid structure in the loaded table: {e}{data.RESET}")
+        t.t_print(f"{data.RED}Error: Invalid structure in the loaded table: {e}{data.END}")
     except Exception as e:
-        t.t_print(f"{data.RED}An unexpected error occurred: {e}{data.RESET}")
+        t.t_print(f"{data.RED}An unexpected error occurred: {e}{data.END}")

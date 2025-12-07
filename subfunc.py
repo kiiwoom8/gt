@@ -25,7 +25,7 @@ def create_note():
     content = t.tn_input("Enter the note content or press Enter to return: ")
     if content and content not in ['z', 'Z']:
         data.notes.append(content)
-        t.t_print(f"{data.GREEN}Note added successfully.{data.RESET}")
+        t.t_print(f"{data.GREEN}Note added successfully.{data.END}")
 
 
 def delete_note():
@@ -38,7 +38,7 @@ def delete_note():
             note_number = int(note_number)
             if 0 < note_number <= len(data.notes):
                 deleted_note = data.notes.pop(note_number - 1)
-                t.t_print(f"{data.GREEN}The note '{deleted_note}' has been deleted successfully.{data.RESET}")
+                t.t_print(f"{data.GREEN}The note '{deleted_note}' has been deleted successfully.{data.END}")
                 break
             else:
                 t.error_text = "\033[31mInvalid input. Please enter a number.\033[0m"
@@ -99,8 +99,8 @@ def print_stats(option):
         t.error_text = "\033[31mYou cannot check the stats of the player.\033[0m"
     try: 
         character_name = data.characters[int(option)]
-        if character_name in data.character_stats:
-            stats = data.character_stats[character_name]
+        if character_name in data.cstat:
+            stats = data.cstat[character_name]
             t.t_print(f"Name: {character_name}")
             for key, value in stats.items():
                 t.t_print(f"{key}: {value}")

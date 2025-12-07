@@ -6,15 +6,15 @@ import subfunc
 import bakup
 import file
 
-RED, BLUSH, GREEN, LBLUE, BLUE, YELLOW, LYELLOW, LGREEN, GRAY, RESET = "\033[31m", "\033[91m", "\033[92m","\033[94m", "\033[34m", "\033[33m", "\033[93m", "\033[92m", "\033[90m", "\033[0m"
+RED, BLUSH, GREEN, LBLUE, BLUE, YELLOW, LYELLOW, LGREEN, GRAY, END = "\033[31m", "\033[91m", "\033[92m","\033[94m", "\033[34m", "\033[33m", "\033[93m", "\033[92m", "\033[90m", "\033[0m"
 
-characters_list = {
+clist = {
     1: "Me", 2: "Setsu", 3: "Gina", 4: "SQ", 5: "Raqio", 6: "Stella", 
     7: "Shigemichi", 8: "Chipie", 9: "Comet", 10: "Jonas", 11: "Kukurushka", 
     12: "Otome", 13: "ShaMing", 14: "Remnan", 15: "Yuriko"
 }
 
-character_stats = subfunc.color_code_stats({name: dict(zip(
+cstat = subfunc.color_code_stats({name: dict(zip(
     ["Charisma", "Intuition", "Logic", "Charm", "Performance", "Stealth"], stats)) for name, stats in [
     ("Setsu", ["10-35", "8-28.5", "12-38.5", "11-36.5", "9.5-31", "3.5-17.5"]),
     ("Gina", ["3.5-17.5", "4-45.5", "10-31.5", "7.5-24", "2-13", "9-31.5"]),
@@ -46,8 +46,8 @@ roles = {name: symbol for (name, symbol) in [
         ("Cold Sleep", "🧊"),
     ]}
 
-action_list = {
-    name: {"Name": f"{color}{name}{RESET}", "Abbr": abbr, "Color": color, "Type": type}
+alist = {
+    name: {"Name": f"{color}{name}{END}", "Abbr": abbr, "Color": color, "Type": type}
     for name, (name, abbr, color, type) in enumerate([
         ("Doubt", "Dou", RED, "Default"),
         ("Cover", "Cov", BLUE, "Default"),
@@ -69,7 +69,7 @@ action_list = {
     ])
 }
 
-options = {
+opts = {
     k if "Exit" not in title else 0: {"title": title, "function": func}
     for k, (title, func) in enumerate([
         ("Record an action", disc.handle_discussion),
@@ -81,7 +81,7 @@ options = {
         ("Remove character from the list", action.remove_character_from_list),
         ("Import/export table", file.choose_option),
         ("Initialize table", func.reset),
-        (f"{GRAY}Exit{RESET}", func.exit_program)
+        (f"{GRAY}Exit{END}", func.exit_program)
     ], start=1)
 }
 
@@ -93,9 +93,9 @@ def reset():
     global discussion_doubt, discussion_defend
     global round
 
-    characters = characters_list.copy()
+    characters = clist.copy()
     matrix = [[[] for _ in characters] for _ in characters]
-    words_to_color = {action["Abbr"]: action["Color"] for action in action_list.values()}
+    words_to_color = {action["Abbr"]: action["Color"] for action in alist.values()}
     current_roles = {role: [] for role in roles.keys()}
     removed_characters, votes, voting_characters = {}, {}, {}
     participation, ties, previous_ties, notes, history = [], [], [], [], []
